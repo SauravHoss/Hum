@@ -9,12 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
- 
 
 public class Cmech extends JPanel implements ActionListener, KeyListener
 {
@@ -33,8 +30,9 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 	Timer t;
 	
 	//photo shit
-	BufferedImage bg, road, bm, cm; 
-	
+	BufferedImage bg, road, bm, cm, go;
+
+	private boolean goboo = false; 
 	
 	public Cmech() 
 	{
@@ -71,7 +69,10 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 			cm = ImageIO.read(Cmech.class.getResource("/images/copmobile.png"));
 		} catch (IOException e) { e.printStackTrace(); }
 		
-		
+		try 
+		{
+			go = ImageIO.read(Cmech.class.getResource("/images/go.png"));
+		} catch (IOException e) { e.printStackTrace(); }
 		
 		space = 300;
 		speed = 2.0;
@@ -130,12 +131,18 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 		g.drawImage(bm, car.x - 5, car.y - 5,null);
 		
 		//opponent cars
-		g.setColor(Color.RED);
+		//g.setColor(Color.RED);
 		for(Rectangle rect: opcars) 
 		{
 			//g.fillRect(rect.x, rect.y, rect.width, rect.height);
 			g.drawImage(cm, rect.x - 22, rect.y - 10,null);
 		}
+		
+		if(goboo)
+			{
+				//implement game over class, try to make a thing that shows leaderboard if have time 
+				g.drawImage(go, -50, -50, null);
+			}	
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -154,7 +161,6 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 					move+=10;
 				}
 			}
-			
 			rect.y += speed;
 		}
 		
@@ -163,7 +169,9 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 		{
 			if(r.intersects(car))
 			{
+				//implement game over class, try to make a thing that shows leaderboard if have time 
 				car.y = r.y+cheight;
+				goboo = true;
 			}
 		}
 		
@@ -230,7 +238,6 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 		}
 	}
 	
-
 	@Override
 	public void keyTyped(KeyEvent e) 
 	{
@@ -245,7 +252,7 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 
 	@Override
 	public void keyPressed(KeyEvent e) 
-	{
+	{		
 		int key = e.getKeyCode();
 		switch(key) 
 		{
@@ -262,9 +269,7 @@ public class Cmech extends JPanel implements ActionListener, KeyListener
 			moveLeft();
 			break;
 		default:
-			break;
-			
+			break;			
 		}
 	}
-
 }

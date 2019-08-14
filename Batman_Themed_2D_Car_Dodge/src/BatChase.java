@@ -1,17 +1,12 @@
 import javax.swing.JFrame;
 
-
-public class Cob extends JFrame 
-{
+@SuppressWarnings("serial")
+public class BatChase extends JFrame
+{	
 	public static void main(String[] args) 
 	{
 		JFrame app = new JFrame();
-		
-		Cmech c = new Cmech();
-		
-		LP l = new LP();
-		
-		app.add(l);
+		Cmech c = new Cmech();	
 		
 		app.add(c);
 		
@@ -19,7 +14,7 @@ public class Cob extends JFrame
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setSize(500, 720);
 		app.setVisible(true);
-		//app.setResizable(false);
-	}
-	
+		app.setResizable(false);
+		app.setTitle("BatChase");	
+	}	
 }
